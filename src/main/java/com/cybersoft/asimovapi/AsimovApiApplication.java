@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AsimovApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AsimovApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AsimovApiApplication.class, args);
+    }
 
 }
