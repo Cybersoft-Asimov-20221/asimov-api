@@ -41,7 +41,6 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     public Director getById(Long directorId) {
-        //var er = directorRepository.findById(directorId);
         return directorRepository.findById(directorId)
                 .orElseThrow( () -> new ResourceNotFoundException(ENTITY, directorId));
     }
