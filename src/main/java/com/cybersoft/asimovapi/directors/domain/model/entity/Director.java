@@ -1,5 +1,6 @@
 package com.cybersoft.asimovapi.directors.domain.model.entity;
 
+import com.cybersoft.asimovapi.announcements.domain.model.entity.Announcement;
 import com.cybersoft.asimovapi.shared.domain.model.AuditModel;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,4 +44,7 @@ public class Director extends AuditModel {
     @NotBlank
     @Size(max = 20)
     private String phone;
+
+    @OneToMany(mappedBy = "director", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Announcement> announcements;
 }
