@@ -1,5 +1,6 @@
 package com.cybersoft.asimovapi.competences.api;
 
+import com.cybersoft.asimovapi.competences.domain.model.entity.Competence;
 import com.cybersoft.asimovapi.competences.domain.service.CompetenceService;
 import com.cybersoft.asimovapi.competences.mapping.CompetenceMapper;
 import com.cybersoft.asimovapi.competences.resource.CompetenceResource;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/competences")
+@RequestMapping("api/v1")
 public class CompetencesController {
 
     @Autowired
@@ -21,28 +22,33 @@ public class CompetencesController {
     @Autowired
     private CompetenceMapper mapper;
 
-    @GetMapping
+    @GetMapping("competences")
     public List<CompetenceResource> getAllCompetences() {
         return mapper.modelListToResource(competenceService.getAll());
     }
 
-    @GetMapping("{competenceId}")
+    @GetMapping("competences/{competenceId}")
     public CompetenceResource getCompetenceById(@PathVariable("competenceId") Long competenceId) {
         return mapper.toResource(competenceService.getById(competenceId));
     }
 
-    @PostMapping
+    @GetMapping("courses/{courseId}/competences")
+    public List<CompetenceResource> getAllByCourseId(@PathVariable("courseId") Long courseId) {
+        return mapper.modelListToResource(competenceService.getAllByCourseId(courseId));
+    }
+
+    @PostMapping("competences")
     public CompetenceResource createCompetence(@RequestBody CreateCompetenceResource request) {
 
         return mapper.toResource(competenceService.create(mapper.toModel(request)));
     }
 
-    @PutMapping("{competenceId}")
+    @PutMapping("competences/{competenceId}")
     public CompetenceResource updateCompetence(@PathVariable Long competenceId, @RequestBody UpdateCompetenceResource request) {
         return mapper.toResource(competenceService.update(competenceId, mapper.toModel(request)));
     }
 
-    @DeleteMapping("{competenceId}")
+    @DeleteMapping("competences/{competenceId}")
     public ResponseEntity<?> deleteCompetence(@PathVariable Long competenceId) {
         return competenceService.delete(competenceId);
     }

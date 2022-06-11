@@ -3,6 +3,7 @@ package com.cybersoft.asimovapi.competences.service;
 import com.cybersoft.asimovapi.competences.domain.model.entity.Competence;
 import com.cybersoft.asimovapi.competences.domain.persistence.CompetenceRepository;
 import com.cybersoft.asimovapi.competences.domain.service.CompetenceService;
+import com.cybersoft.asimovapi.courses.domain.persistence.CourseRepository;
 import com.cybersoft.asimovapi.shared.exception.ResourceNotFoundException;
 import com.cybersoft.asimovapi.shared.exception.ResourceValidationException;
 import org.springframework.data.domain.Page;
@@ -22,10 +23,12 @@ public class CompetenceServiceImpl implements CompetenceService {
 
     private final CompetenceRepository competenceRepository;
 
+    private final CourseRepository courseRepository;
     private final Validator validator;
 
-    public CompetenceServiceImpl(CompetenceRepository competenceRepository, Validator validator) {
+    public CompetenceServiceImpl(CompetenceRepository competenceRepository, CourseRepository courseRepository, Validator validator) {
         this.competenceRepository = competenceRepository;
+        this.courseRepository = courseRepository;
         this.validator = validator;
     }
 
@@ -37,6 +40,14 @@ public class CompetenceServiceImpl implements CompetenceService {
     @Override
     public Page<Competence> getAll(Pageable pageable) {
         return competenceRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Competence> getAllByCourseId(Long courseId) {
+        if(courseRepository.findById(courseId).isEmpty())
+            throw new ResourceNotFoundException("Course not found");
+
+        return competenceRepository.getAllCompetencesByCourseId(courseId);
     }
 
     @Override

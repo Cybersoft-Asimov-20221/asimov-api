@@ -1,5 +1,7 @@
 package com.cybersoft.asimovapi.courses.service;
 
+import com.cybersoft.asimovapi.competences.domain.model.entity.Competence;
+import com.cybersoft.asimovapi.competences.domain.persistence.CompetenceRepository;
 import com.cybersoft.asimovapi.courses.domain.model.entity.Course;
 import com.cybersoft.asimovapi.courses.domain.persistence.CourseRepository;
 import com.cybersoft.asimovapi.courses.domain.service.CourseService;
@@ -22,10 +24,13 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
+    private final CompetenceRepository competenceRepository;
+
     private final Validator validator;
 
-    public CourseServiceImpl(CourseRepository courseRepository, Validator validator) {
+    public CourseServiceImpl(CourseRepository courseRepository, CompetenceRepository competenceRepository, Validator validator) {
         this.courseRepository = courseRepository;
+        this.competenceRepository = competenceRepository;
         this.validator = validator;
     }
 
@@ -38,6 +43,24 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Page<Course> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
+    }
+
+    @Override
+    public ResponseEntity<?> addCompetenceToCourse(Long competenceId, Long courseId) {
+
+        if (competenceRepository.findById(competenceId).isEmpty())
+            throw new ResourceNotFoundException("competence not found");
+        if (courseRepository.findById(courseId).isEmpty())
+            throw new ResourceNotFoundException("course not found");
+
+        List<Competence> competences = competenceRepository.getAllCompetencesByCourseId(courseId);
+        if (competences.contains(competenceRepository.findById(competenceId).get())) {
+            throw new ResourceNotFoundException("competence is already added in this course");
+        }
+
+        courseRepository.registerCompetenceToCourse(courseId, competenceId);
+
+        return ResponseEntity.ok("competence registered for course");
     }
 
     @Override

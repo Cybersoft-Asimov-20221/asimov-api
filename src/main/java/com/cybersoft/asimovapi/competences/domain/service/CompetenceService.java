@@ -10,6 +10,7 @@ import java.util.List;
 public interface CompetenceService {
     List<Competence> getAll();
     Page<Competence> getAll(Pageable pageable);
+    List<Competence> getAllByCourseId(Long courseId);
     Competence getById(Long competenceId);
     Competence create(Competence competence);
     Competence update(Long competenceId, Competence request);
