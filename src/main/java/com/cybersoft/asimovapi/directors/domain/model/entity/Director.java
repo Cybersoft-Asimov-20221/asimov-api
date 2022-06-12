@@ -2,6 +2,7 @@ package com.cybersoft.asimovapi.directors.domain.model.entity;
 
 import com.cybersoft.asimovapi.announcements.domain.model.entity.Announcement;
 import com.cybersoft.asimovapi.shared.domain.model.AuditModel;
+import com.cybersoft.asimovapi.teachers.domain.model.Teacher;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,6 +46,11 @@ public class Director extends AuditModel {
     @Size(max = 20)
     private String phone;
 
+    //relation with announcements
     @OneToMany(mappedBy = "director", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Announcement> announcements;
+
+    //relation with teachers
+    @OneToMany(mappedBy = "director", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Teacher> teachers;
 }
