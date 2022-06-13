@@ -18,4 +18,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(value = "insert into courses_competences(course_id, competence_id) values (?1, ?2)", nativeQuery = true)
     @Transactional
     void registerCompetenceToCourse(Long courseId, Long CompetenceId);
+    @Query(value = "select co.id, co.created_at, co.updated_at, co.name, co.description, co.state from teachers te join teachers_courses tc on te.id = tc.teacher_id join courses co on tc.course_id = co.id where te.id = ?1", nativeQuery = true)
+    List<Course> getAllCoursesByTeacherId(Long teacherId);
 }

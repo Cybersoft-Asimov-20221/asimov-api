@@ -7,6 +7,7 @@ import com.cybersoft.asimovapi.courses.domain.persistence.CourseRepository;
 import com.cybersoft.asimovapi.courses.domain.service.CourseService;
 import com.cybersoft.asimovapi.shared.exception.ResourceNotFoundException;
 import com.cybersoft.asimovapi.shared.exception.ResourceValidationException;
+import com.cybersoft.asimovapi.teachers.domain.repository.TeacherRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +27,14 @@ public class CourseServiceImpl implements CourseService {
 
     private final CompetenceRepository competenceRepository;
 
+    private final TeacherRepository teacherRepository;
+
     private final Validator validator;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CompetenceRepository competenceRepository, Validator validator) {
+    public CourseServiceImpl(CourseRepository courseRepository, CompetenceRepository competenceRepository, TeacherRepository teacherRepository, Validator validator) {
         this.courseRepository = courseRepository;
         this.competenceRepository = competenceRepository;
+        this.teacherRepository = teacherRepository;
         this.validator = validator;
     }
 
@@ -43,6 +47,14 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Page<Course> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Course> getAllByTeacherId(Long teacherId) {
+        if(teacherRepository.findById(teacherId).isEmpty())
+            throw new ResourceNotFoundException("teacher not found");
+
+        return courseRepository.getAllCoursesByTeacherId(teacherId);
     }
 
     @Override

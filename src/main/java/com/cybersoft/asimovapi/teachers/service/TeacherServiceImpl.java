@@ -7,6 +7,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 
+import com.cybersoft.asimovapi.courses.domain.model.entity.Course;
+import com.cybersoft.asimovapi.courses.domain.persistence.CourseRepository;
 import com.cybersoft.asimovapi.directors.domain.persistence.DirectorRepository;
 import com.cybersoft.asimovapi.shared.exception.ResourceNotFoundException;
 import com.cybersoft.asimovapi.shared.exception.ResourceValidationException;
@@ -25,6 +27,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
+    private CourseRepository courseRepository;
+    @Autowired
     private Validator validator;
 
     @Override
@@ -35,6 +39,22 @@ public class TeacherServiceImpl implements TeacherService {
             throw new ResourceNotFoundException("Director", directorId);
 
         return teacherRepository.findByDirectorId(directorId);
+    }
+
+    @Override
+    public ResponseEntity<?> addCourseToTeacher(Long courseId, Long teacherId) {
+        if (courseRepository.findById(courseId).isEmpty())
+            throw new ResourceNotFoundException("course not found");
+        if (teacherRepository.findById(teacherId).isEmpty())
+            throw new ResourceNotFoundException("teacher not found");
+
+        List<Course> courses = courseRepository.getAllCoursesByTeacherId(teacherId);
+        if (courses.contains(courseRepository.findById(courseId).get()))
+            throw new ResourceNotFoundException("course is already added for this teacher");
+
+        teacherRepository.registerCourseToTeacher(teacherId, courseId);
+
+        return ResponseEntity.ok("course registered for teacher");
     }
 
     @Override

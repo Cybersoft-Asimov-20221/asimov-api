@@ -4,11 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.cybersoft.asimovapi.courses.domain.model.entity.Course;
 import com.cybersoft.asimovapi.directors.domain.model.entity.Director;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
+
+import java.util.List;
 
 
 @Entity
@@ -47,13 +50,13 @@ public class Teacher{
     @NotBlank
     private String phone;
 
-    //Relationships witch director
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "director_id", nullable = false)
     private Director director;
 
-    //Relationships
-    //@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-    //mappedBy = "teachers")
-    //private List<Course> courses;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "teachers_courses",
+            joinColumns = {@JoinColumn(name = "teacher_id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "course_id", nullable = false)})
+    private List<Course> courses;
 }

@@ -3,6 +3,7 @@ package com.cybersoft.asimovapi.courses.domain.model.entity;
 import com.cybersoft.asimovapi.competences.domain.model.entity.Competence;
 import com.cybersoft.asimovapi.items.domain.model.entity.Item;
 import com.cybersoft.asimovapi.shared.domain.model.AuditModel;
+import com.cybersoft.asimovapi.teachers.domain.model.Teacher;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -47,6 +48,9 @@ public class Course extends AuditModel {
     joinColumns = {@JoinColumn(name = "course_id", nullable = false)},
     inverseJoinColumns = {@JoinColumn(name = "competence_id", nullable = false)})
     private List<Competence> competences;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "courses")
+    private List<Teacher> teachers;
 
     public void addCompetence(Competence competence) {
         if(this.competences == null)
