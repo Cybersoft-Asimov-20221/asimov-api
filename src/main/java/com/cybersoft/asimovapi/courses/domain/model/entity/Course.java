@@ -1,6 +1,7 @@
 package com.cybersoft.asimovapi.courses.domain.model.entity;
 
 import com.cybersoft.asimovapi.competences.domain.model.entity.Competence;
+import com.cybersoft.asimovapi.items.domain.model.entity.Item;
 import com.cybersoft.asimovapi.shared.domain.model.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -37,6 +38,9 @@ public class Course extends AuditModel {
     private String description;
 
     private Boolean state;
+
+    @OneToMany( mappedBy = "course", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    List<Item> items;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "courses_competences",
