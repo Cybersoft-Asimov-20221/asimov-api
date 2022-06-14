@@ -10,3 +10,6 @@ This repository contains the backend for the asimov project
 * Yordy Rolando Mochcco Atauje - U201923959
 * Oscar Enrique palomino medina - U201822717
 
+## Documentation
+* version 1.0.0 13/06/2022
+
