@@ -18,7 +18,7 @@ public class UpdateItemResource {
 
     @NotNull
     @NotBlank
-    private String value;
+    private String description;
 
     private Boolean state;
 }

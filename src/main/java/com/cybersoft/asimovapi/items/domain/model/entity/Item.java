@@ -31,7 +31,7 @@ public class Item extends AuditModel {
     @NotNull
     @NotBlank
     @Size(max = 100)
-    private String value;
+    private String description;
 
     private Boolean state;
 

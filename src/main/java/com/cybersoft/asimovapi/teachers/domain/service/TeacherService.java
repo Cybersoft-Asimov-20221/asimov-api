@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface TeacherService {
     List<Teacher> getAllByDirectorId(Long directorId);
+    Teacher getById(Long id);
 
     public ResponseEntity<?> addCourseToTeacher(Long courseId, Long teacherId);
 

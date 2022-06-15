@@ -42,6 +42,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher getById(Long id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
+    }
+
+    @Override
     public ResponseEntity<?> addCourseToTeacher(Long courseId, Long teacherId) {
         if (courseRepository.findById(courseId).isEmpty())
             throw new ResourceNotFoundException("course not found");

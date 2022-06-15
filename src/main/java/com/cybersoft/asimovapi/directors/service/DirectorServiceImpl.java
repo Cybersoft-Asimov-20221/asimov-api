@@ -67,8 +67,8 @@ public class DirectorServiceImpl implements DirectorService {
 
         return directorRepository.findById(directorId).map( data ->
                 directorRepository.save(
-                        data.withFirstName(director.getFirstName())
-                                .withLastName(director.getLastName())
+                        data.withFirst_name(director.getFirst_name())
+                                .withLast_name(director.getLast_name())
                                 .withAge(director.getAge())
                                 .withEmail(director.getEmail())
                                 .withPhone(director.getPhone()))

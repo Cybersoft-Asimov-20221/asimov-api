@@ -18,7 +18,7 @@ public class CreateItemResource {
 
     @NotNull
     @NotBlank
-    private String value;
+    private String description;
 
     private Boolean state;
 }
