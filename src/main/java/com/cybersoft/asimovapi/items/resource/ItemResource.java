@@ -11,7 +11,7 @@ public class ItemResource {
 
     private String name;
 
-    private String value;
+    private String description;
 
     private Boolean state;
 }

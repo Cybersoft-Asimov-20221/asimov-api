@@ -27,12 +27,12 @@ public class Director extends AuditModel {
     @NotNull
     @NotBlank
     @Size(max = 20)
-    private String firstName;
+    private String first_name;
 
     @NotNull
     @NotBlank
     @Size(max = 20)
-    private String lastName;
+    private String last_name;
 
     private int age;
 

@@ -71,7 +71,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findById(itemId).map(item ->
                 itemRepository.save(
                         item.withName(request.getName())
-                                .withState(request.getState()).withValue(request.getValue()))
+                                .withState(request.getState()).withDescription(request.getDescription()))
                 ).orElseThrow(() -> new ResourceNotFoundException(ENTITY, itemId));
     }
 

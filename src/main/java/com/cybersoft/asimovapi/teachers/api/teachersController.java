@@ -35,6 +35,11 @@ public class teachersController {
         return mapper.modelListToResource(teacherService.getAllByDirectorId(directorId));
     }
 
+    @GetMapping("teachers/{teacherId}")
+    public TeacherResource getTeacherById(@PathVariable("teacherId") Long teacherId){
+        return mapper.toResource(teacherService.getById(teacherId));
+    }
+
     @PostMapping("teachers/{teacherId}/courses/{courseId}")
     public ResponseEntity<?> addCourseToTeacher(@PathVariable Long teacherId, Long courseId) {
         return teacherService.addCourseToTeacher(courseId, teacherId);
