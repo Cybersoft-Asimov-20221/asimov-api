@@ -1,14 +1,15 @@
 package com.cybersoft.asimovapi.directors.resource;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
-public class DirectorResource {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@With
+public class AuthenticateDirectorResource {
     private Long id;
     private String first_name;
     private String last_name;
@@ -16,4 +17,5 @@ public class DirectorResource {
     private String email;
     private String phone;
     private List<String> roles;
+    private String token;
 }

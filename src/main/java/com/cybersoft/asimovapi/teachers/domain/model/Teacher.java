@@ -6,12 +6,15 @@ import javax.validation.constraints.Size;
 
 import com.cybersoft.asimovapi.courses.domain.model.entity.Course;
 import com.cybersoft.asimovapi.directors.domain.model.entity.Director;
+import com.cybersoft.asimovapi.security.domain.model.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -46,9 +49,19 @@ public class Teacher{
     @Size(max = 50)
     private String email;
 
+    @NotBlank
+    @Size(max = 120)
+    private String password;
+
     @NotNull
     @NotBlank
     private String phone;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "teacher_roles",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "director_id", nullable = false)
