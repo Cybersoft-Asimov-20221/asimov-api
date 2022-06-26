@@ -14,10 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity
+/*@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration("TeacherSecurityConfig")
-@Order(1000)
+@Order(1000)*/
 public class WebSecurityConfigTeacher extends WebSecurityConfigurerAdapter {
     /*@Autowired
     TeacherService teacherService;

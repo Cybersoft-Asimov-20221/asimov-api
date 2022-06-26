@@ -42,11 +42,6 @@ public class DirectorsController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDirectorRequest request) {
         return directorService.register(request);
     }
-    /*@PostMapping
-    public DirectorResource createDirector(@RequestBody CreateDirectorResource request) {
-
-        return mapper.toResource(directorService.create(mapper.toModel(request)));
-    }*/
 
     @PutMapping("{directorId}")
     @PreAuthorize("hasRole('DIRECTOR')")

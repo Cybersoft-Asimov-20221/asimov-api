@@ -54,15 +54,12 @@ public class teachersController {
     public ResponseEntity<?> registerUser(@PathVariable Long directorId, @Valid @RequestBody RegisterTeacherRequest request) {
         return teacherService.register(directorId, request);
     }
+
     @PostMapping("teachers/{teacherId}/courses/{courseId}")
-    public ResponseEntity<?> addCourseToTeacher(@PathVariable Long teacherId, Long courseId) {
+    @PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
+    public ResponseEntity<?> addCourseToTeacher(@PathVariable Long teacherId, @PathVariable Long courseId) {
         return teacherService.addCourseToTeacher(courseId, teacherId);
     }
-
-    /*@PostMapping("directors/{directorId}/teachers")
-    public TeacherResource createTeacher(@PathVariable("directorId")Long directorId, @RequestBody SaveTeacherResource resource){
-        return mapper.toResource(teacherService.createTeacher(directorId, mapper.toModel(resource)));
-    }*/
 
     @PutMapping("teachers/{teacherId}")
     @PreAuthorize("hasRole('TEACHER')")

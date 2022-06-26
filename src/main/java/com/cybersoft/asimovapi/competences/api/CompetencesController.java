@@ -8,12 +8,14 @@ import com.cybersoft.asimovapi.competences.resource.CreateCompetenceResource;
 import com.cybersoft.asimovapi.competences.resource.UpdateCompetenceResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
 public class CompetencesController {
 
     @Autowired

@@ -6,12 +6,14 @@ import com.cybersoft.asimovapi.announcements.resource.AnnouncementResource;
 import com.cybersoft.asimovapi.announcements.resource.CreateAnnouncementResource;
 import com.cybersoft.asimovapi.announcements.resource.UpdateAnnouncementResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
 public class AnnouncementsController {
 
     private final AnnouncementService announcementService;
