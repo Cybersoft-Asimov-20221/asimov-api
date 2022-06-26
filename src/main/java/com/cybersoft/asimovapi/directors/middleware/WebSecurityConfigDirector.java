@@ -2,6 +2,8 @@ package com.cybersoft.asimovapi.directors.middleware;
 
 import com.cybersoft.asimovapi.directors.domain.service.DirectorService;
 import com.cybersoft.asimovapi.security.middleware.JwtAuthenticationEntryPointDirector;
+import com.cybersoft.asimovapi.teachers.domain.service.TeacherService;
+import com.cybersoft.asimovapi.teachers.middleware.JwtAuthorizationFilterTeacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,9 @@ public class WebSecurityConfigDirector extends WebSecurityConfigurerAdapter {
     DirectorService directorService;
 
     @Autowired
+    TeacherService teacherService;
+
+    @Autowired
     JwtAuthenticationEntryPointDirector unauthorizedHandler;
 
     @Bean
@@ -33,10 +38,16 @@ public class WebSecurityConfigDirector extends WebSecurityConfigurerAdapter {
         return new JwtAuthorizationFilterDirector();
     }
 
+    @Bean
+    public JwtAuthorizationFilterTeacher authorizationFilterTeacher() {
+        return new JwtAuthorizationFilterTeacher();
+    }
+
 
     @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(directorService);
+        builder.userDetailsService(teacherService);
     }
 
     @Bean
@@ -58,11 +69,11 @@ public class WebSecurityConfigDirector extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/directors/auth/*", "/swagger-ui/*", "/api-docs/**").permitAll()
+                .antMatchers("/api/v1/directors/auth/*", "/api/v1/teachers/auth/**", "/swagger-ui/*", "/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authorizationFilterDirector(), UsernamePasswordAuthenticationFilter.class);
-
+        http.addFilterBefore(authorizationFilterTeacher(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

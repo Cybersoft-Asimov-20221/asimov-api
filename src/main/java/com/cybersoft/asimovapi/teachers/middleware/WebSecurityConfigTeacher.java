@@ -19,22 +19,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration("TeacherSecurityConfig")
 @Order(1000)
 public class WebSecurityConfigTeacher extends WebSecurityConfigurerAdapter {
-    @Autowired
+    /*@Autowired
     TeacherService teacherService;
 
     @Autowired
-    JwtAuthenticationEntryPointTeacher unauthorizedHandler;
+    JwtAuthenticationEntryPointTeacher unauthorizedHandler;*/
 
-    @Bean
+    /*@Bean
     public JwtAuthorizationFilterTeacher authorizationFilterTeacher() {
         return new JwtAuthorizationFilterTeacher();
-    }
+    }*/
 
 
-    @Override
+    /*@Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(teacherService);
-    }
+    }*/
 
     /*@Bean
     @Override
@@ -47,7 +47,7 @@ public class WebSecurityConfigTeacher extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }*/
 
-    @Override
+    /*@Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.cors().and().csrf().disable()
@@ -59,6 +59,6 @@ public class WebSecurityConfigTeacher extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(authorizationFilterTeacher(), UsernamePasswordAuthenticationFilter.class);
 
-    }
+    }*/
 
 }

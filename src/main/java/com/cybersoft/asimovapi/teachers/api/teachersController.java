@@ -45,7 +45,7 @@ public class teachersController {
     public TeacherResource getTeacherById(@PathVariable("teacherId") Long teacherId){
         return mapper.toResource(teacherService.getById(teacherId));
     }
-    @PostMapping("teachers/auth/sign-in/")
+    @PostMapping("teachers/auth/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticateRequest request) {
         return teacherService.authenticate(request);
     }
