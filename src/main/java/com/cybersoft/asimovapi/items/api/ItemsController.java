@@ -6,12 +6,14 @@ import com.cybersoft.asimovapi.items.domain.service.ItemService;
 import com.cybersoft.asimovapi.items.resource.CreateItemResource;
 import com.cybersoft.asimovapi.items.resource.UpdateItemResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
 public class ItemsController {
 
     private final ItemService itemService;

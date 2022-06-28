@@ -7,7 +7,7 @@ import javax.validation.ConstraintViolation;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ResourceValidationException extends RuntimeException {
 
     public ResourceValidationException() {
