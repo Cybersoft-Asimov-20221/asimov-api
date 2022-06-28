@@ -13,5 +13,6 @@ public class TeacherResource {
     private Integer age;
     private String email;
     private String phone;
+    private Long director_id;
     private List<String> roles;
 }

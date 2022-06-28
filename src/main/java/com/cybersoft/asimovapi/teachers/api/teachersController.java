@@ -43,7 +43,11 @@ public class teachersController {
     @GetMapping("teachers/{teacherId}")
     @PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
     public TeacherResource getTeacherById(@PathVariable("teacherId") Long teacherId){
-        return mapper.toResource(teacherService.getById(teacherId));
+        var directorId = teacherService.getById(teacherId).getDirector().getId();
+        var teacher = mapper.toResource(teacherService.getById(teacherId));
+        teacher.setDirector_id(directorId);
+        //return mapper.toResource(teacherService.getById(teacherId));
+        return teacher;
     }
     @PostMapping("teachers/auth/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticateRequest request) {
