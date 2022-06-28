@@ -7,7 +7,6 @@ import com.cybersoft.asimovapi.teachers.middleware.JwtAuthorizationFilterTeacher
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,8 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Configuration("DirectorSecurityConfig")
-@Order(-1000)
+@Configuration
 public class WebSecurityConfigDirector extends WebSecurityConfigurerAdapter {
     @Autowired
     DirectorService directorService;
@@ -69,7 +67,7 @@ public class WebSecurityConfigDirector extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/directors/auth/*", "/api/v1/teachers/auth/**", "/api/v1/directors", "/swagger-ui/*", "/api-docs/**").permitAll()
+                .antMatchers("/api/v1/directors/auth/*", "/api/v1/teachers/auth/**", "/api/v1/directors", "/swagger-ui/**", "/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authorizationFilterDirector(), UsernamePasswordAuthenticationFilter.class);
