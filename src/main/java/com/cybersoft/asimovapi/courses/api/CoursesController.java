@@ -9,12 +9,14 @@ import com.cybersoft.asimovapi.courses.resource.CreateCourseResource;
 import com.cybersoft.asimovapi.courses.resource.UpdateCourseResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1")
+@PreAuthorize("hasRole('DIRECTOR') or hasRole('TEACHER')")
 public class CoursesController {
 
     @Autowired
@@ -48,7 +50,7 @@ public class CoursesController {
     }
 
     @PostMapping("courses/{courseId}/competence/{competenceId}")
-    public ResponseEntity<?> addCompetenceToCourse(@PathVariable Long courseId, Long competenceId) {
+    public ResponseEntity<?> addCompetenceToCourse(@PathVariable Long courseId, @PathVariable Long competenceId) {
         return courseService.addCompetenceToCourse(competenceId, courseId);
     }
 
